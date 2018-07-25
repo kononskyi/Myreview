@@ -6,7 +6,7 @@ exports.config = {
     frameworkPath: require.resolve('protractor-cucumber-framework'),
 
     specs: [
-        '../e2e-tests/features/Notes.feature'
+        '../e2e-tests/features/Login.feature'
     ],
 
     capabilities: {
@@ -20,9 +20,9 @@ exports.config = {
 
     cucumberOpts: {
         require: [
-            '../e2e-tests/features/step_definitions/Notes_Steps.js'
+            '../e2e-tests/features/step_definitions/LoginPage_Steps.js'
         ],
-        tags: ['@test2'],
+        tags: [],
         strict: true,
         compiler: []
     }

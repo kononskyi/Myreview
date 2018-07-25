@@ -1,10 +1,10 @@
 Feature: Login to Myreview
-  As a user with defined role
+  As a valid user with defined role
   I go to the Myreview main page, enter valid login, password and press login button
   So i have to be logged into the system and log out from the system
 
   @tag1
-  Scenario Outline: Login as user with defined role
+  Scenario Outline: Login as valid user with defined role
     Given Login page is opened
     When  I type "<username>" into username field
     And I type "Levi9Pro" into password field

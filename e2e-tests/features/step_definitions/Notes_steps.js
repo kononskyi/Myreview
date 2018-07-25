@@ -1,19 +1,18 @@
 "use strict";
 
-let notesPage_Steps = require('./Classes/NotesPage');
-let loginPage_Steps = require('./Classes/LoginPage');
+let notesPage = require('../Classes/NotesPage');
+let notesPage_Steps = new notesPage();
+let LoginPage = require('../Classes/LoginPage');
+let loginPage_Steps = new LoginPage();
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 var expect = chai.expect;
 chai.use(chaiAsPromised);
 
-
 const {Given, When, Then, BeforeAll, AfterAll} = require('cucumber');
 browser.ignoreSynchronization = true;
 
-
 BeforeAll('', async () => {
-
     await loginPage_Steps.GetURl("http://ep-ubuntu.levi9.com/app_dev.php/login");
 });
 
@@ -42,7 +41,6 @@ Then(/^Objectives modal window is appeared$/, async () => {
     await notesPage_Steps.CheckObjectiveWindow();
 });
 
-
 When(/^Fill title, comment with valid data and choose deadline$/, async () => {
     await loginPage_Steps.FindElementAndSendKEys(notesPage_Steps.dialog_window_objective_title_field,"TitleTitleTitle");
     await loginPage_Steps.FindElementAndSendKEys(notesPage_Steps.dialog_window_objective_comment_field,"CommentComment");
@@ -59,9 +57,20 @@ When(/^Press Save button$/, async () => {
 
 
 Then(/^Just saved objective appears in the list of objectives$/, async () => {
-     await notesPage_Steps.CheckJustAddedObjectiveTittle("TitleTitleTitle");
-
-
+   await notesPage_Steps.CheckJustAddedObjectiveTittle("TitleTitleTitle");
    //  let comment_check = notesPage_Steps.CheckJustAddedObjectiveComment('CommentComment');
     // await browser.wait(comment_check,5000,"Wait for adding objective");
+});
+
+
+When(/^User press delete button near the last objective$/, async () => {
+ await notesPage_Steps.DeleteObjective(notesPage_Steps.delete_last_notes_button);
+});
+
+When(/^Confirm the selection in Delete this Objective dialog window by clicking Delete button$/, async () => {
+  await notesPage_Steps.CheckDeleteObjectivesWindow();
+});
+
+Then(/^Objective removed from the list$/, async () => {
+   await notesPage_Steps.CheckJustDeletedObjective("123123123123");
 });
