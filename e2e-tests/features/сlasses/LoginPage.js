@@ -1,7 +1,6 @@
-
 let Helpers = require('../helpers/Helpers');
 
-class LoginPage extends Helpers{
+class LoginPage extends Helpers {
 
     constructor() {
         super();
@@ -67,7 +66,7 @@ class LoginPage extends Helpers{
         return array;
     }
 
-    async LogOut(logout) {
+    async CheckLogOut(logout) {
         await this.Click(this.user_dropdown_toggle);
         await this.Click(logout);
         return this.WaitUntilElementIsVisible(this.login_button);

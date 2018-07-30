@@ -1,4 +1,3 @@
-
 let LoginPage = require('../сlasses/LoginPage');
 let login_steps = new LoginPage();
 var chai = require('chai');
@@ -6,7 +5,7 @@ var chaiAsPromised = require('chai-as-promised');
 var expect = chai.expect;
 chai.use(chaiAsPromised);
 
-class Login_steps extends LoginPage{
+class Login_steps extends LoginPage {
 
     async LoginCheck() {
         await expect(browser.getCurrentUrl()).to.become('http://ep-ubuntu.levi9.com/app_dev.php/login');
@@ -31,7 +30,7 @@ class Login_steps extends LoginPage{
     }
 
     async LogOut() {
-        await login_steps.LogOut(login_steps.log_out_button);
+        await login_steps.CheckLogOut(login_steps.log_out_button);
     }
 
     async NavBarLogoCheck() {
@@ -53,9 +52,8 @@ class Login_steps extends LoginPage{
     }
 
     async CheckLoginButton() {
-        await login_steps.CheckValueElement(login_steps.login_button,"Login");
+        await login_steps.CheckValueElement(login_steps.login_button, "Login");
     }
-
 }
 
 module.exports = Login_steps;

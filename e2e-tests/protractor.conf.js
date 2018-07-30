@@ -22,7 +22,7 @@ exports.config = {
         require: [
             '../e2e-tests/features/step_definitions/Login_step_def.js'
         ],
-        tags: ['@tag2'],
+        tags: [],
         strict: true,
         compiler: []
     }

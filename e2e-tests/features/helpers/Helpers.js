@@ -42,7 +42,7 @@ class Helpers {
 
     async CheckPresenceOfTextInElement(elem, text) {
         await this.WaitUntilElementIsVisible(elem);
-        let textfromsel =  element(elem).getText();
+        let textfromsel = element(elem).getText();
         if (await textfromsel !== text) {
             throw Error(`Check text (${text}) please`);
         }
@@ -51,11 +51,12 @@ class Helpers {
 
     async CheckValueElement(elem, text) {
         await this.WaitUntilElementIsVisible(elem);
-        let atribute =  element(elem).getAttribute('value');
+        let atribute = element(elem).getAttribute('value');
         if (await atribute !== text) {
             throw Error(`Check text (${text}) please`);
         }
         return atribute;
     }
 }
+
 module.exports = Helpers;

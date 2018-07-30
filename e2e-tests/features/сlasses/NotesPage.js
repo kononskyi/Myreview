@@ -89,7 +89,6 @@ class NotesPage extends Helpers {
         });
     }
 
-
     async CheckJustDeletedObjective(text) {
         let scope = element.all(this.objective_titles_scope).filter(async (elem) => {
             return await elem.getText() === text
