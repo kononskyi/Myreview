@@ -20,9 +20,9 @@ exports.config = {
 
     cucumberOpts: {
         require: [
-            '../e2e-tests/features/step_definitions/LoginPage_Steps.js'
+            '../e2e-tests/features/step_definitions/Login_step_def.js'
         ],
-        tags: [],
+        tags: ['@tag2'],
         strict: true,
         compiler: []
     }
