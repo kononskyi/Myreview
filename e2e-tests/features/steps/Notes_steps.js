@@ -1,33 +1,31 @@
 let LoginPage = require('../сlasses/LoginPage');
-let login_steps = new LoginPage;
-let NotesPage = require('../сlasses/NotesPage');
-let notes_steps = new NotesPage;
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
-var expect = chai.expect;
+const loginPage = new LoginPage;
+let chai = require('chai');
+let chaiAsPromised = require('chai-as-promised');
+let expect = chai.expect;
 chai.use(chaiAsPromised);
 
-class Notes_steps extends NotesPage {
+class NotesSteps extends LoginPage {
 
-    async LoginAsUSer(login, password) {
+    async loginAsUSer(login, password) {
         await expect(browser.getCurrentUrl()).to.eventually.equal('http://ep-ubuntu.levi9.com/app_dev.php/login');
-        await expect(login_steps.GetTitle()).to.eventually.equal('MyReview');
-        await login_steps.FillLoginFields(login);
-        await login_steps.FillPasswordFields(password);
-        await this.Click(login_steps.login_button);
+        await expect(loginPage.getTitle()).to.eventually.equal('MyReview');
+        await loginPage.fillLoginFields(login);
+        await loginPage.fillPasswordFields(password);
+        await this.click(loginPage.login_button);
     }
 
-    async CheckNotesItem() {
-        await this.CheckPresenceOfTextInElement(this.notes_item, "Notes");
-        await this.CheckPresenceOfTextInElement(this.objectives_header, "Objectives");
+    async checkNotesItem() {
+        await this.checkPresenceOfTextInElement(this.notes_item, "Notes");
+        await this.checkPresenceOfTextInElement(this.objectives_header, "Objectives");
     }
 
-    async CreateObjective() {
-        await this.FindElementAndSendKEys(this.dialog_window_objective_title_field, "TitleTitleTitle");
-        await this.FindElementAndSendKEys(this.dialog_window_objective_comment_field, "CommentComment");
-        await this.ChooseCurrentDeadlineFromCalendar(this.dialog_window_objective_open_calendar_button, this
+    async createObjective() {
+        await this.findElementAndSendKEys(this.dialog_window_objective_title_field, "TitleTitleTitle");
+        await this.findElementAndSendKEys(this.dialog_window_objective_comment_field, "CommentComment");
+        await this.chooseCurrentDeadlineFromCalendar(this.dialog_window_objective_open_calendar_button, this
             .dialog_window_objective_calendar, this.dialog_window_objective_default_date);
     }
 }
 
-module.exports = Notes_steps;
+module.exports = NotesSteps;

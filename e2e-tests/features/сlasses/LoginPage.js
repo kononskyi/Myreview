@@ -1,4 +1,8 @@
 let Helpers = require('../helpers/Helpers');
+let chai = require('chai');
+let chaiAsPromised = require('chai-as-promised');
+let expect = chai.expect;
+chai.use(chaiAsPromised);
 
 class LoginPage extends Helpers {
 
@@ -20,45 +24,41 @@ class LoginPage extends Helpers {
         this.log_out_button = by.css("a[ng-click='vm.logOut()']");
     }
 
-    async FillLoginFields(key) {
-        await this.WaitUntilElementIsVisible(this.username);
-        await this.ClearField(this.username);
+    async fillLoginFields(key) {
+        await this.waitUntilElementIsVisible(this.username);
+        await this.clearField(this.username);
         return element(this.username).sendKeys(key);
     }
 
-    async FillPasswordFields(key) {
-        await this.WaitUntilElementIsVisible(this.password);
-        await this.ClearField(this.password);
+    async fillPasswordFields(key) {
+        await this.waitUntilElementIsVisible(this.password);
+        await this.clearField(this.password);
         return element(this.password).sendKeys(key);
     }
 
-    async CheckPresenceNavbar(logo, navbar) {
-        await this.WaitUntilElementIsVisible(navbar);
-        await this.WaitUntilElementIsClickable(logo);
-        await this.WaitUntilElementIsClickable(logo);
-        return this.Click(logo);
+    async checkPresenceNavbar(logo, navbar) {
+        await this.waitUntilElementIsVisible(navbar);
+        await this.waitUntilElementIsClickable(logo);
+        await this.waitUntilElementIsClickable(logo);
+        return this.click(logo);
     }
 
-    async CheckPresenceUserPasPlaceholders(placeholder) {
+    async checkPresenceUserPasPlaceholders(placeholder) {
         let scope = $$('input[class=\'form-control\']').filter(async (elem) => {
             return (await elem.getAttribute('placeholder') === placeholder);
         });
         let count = scope.count();
-        if (await count !== 1) {
-            throw Error("Check Placeholder please");
-        }
-        else {
-            return scope;
-        }
+        await expect(count).to.become(1);
+        return scope;
     }
 
-    async CheckFieldsIcons(user_icon, pasw_icon) {
-        await this.WaitUntilElementIsVisible(user_icon);
-        await this.WaitUntilElementIsVisible(pasw_icon);
+    async checkFieldsIcons(user_icon, pasw_icon) {
+        await this.waitUntilElementIsVisible(user_icon);
+        await this.waitUntilElementIsVisible(pasw_icon);
     }
 
-    async CheckIfUserISLogged(elem1) {
-        await this.WaitUntilElementIsVisible(elem1);
+    async checkIfUserISLogged(elem1) {
+        await this.waitUntilElementIsVisible(elem1);
         const word = /Username:/g;
         let array = [];
         let data = element(elem1).getAttribute('aria-label');
@@ -66,10 +66,10 @@ class LoginPage extends Helpers {
         return array;
     }
 
-    async CheckLogOut(logout) {
-        await this.Click(this.user_dropdown_toggle);
-        await this.Click(logout);
-        return this.WaitUntilElementIsVisible(this.login_button);
+    async checkLogOut(logout) {
+        await this.click(this.user_dropdown_toggle);
+        await this.click(logout);
+        return this.waitUntilElementIsVisible(this.login_button);
     }
 
 }

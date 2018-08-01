@@ -1,59 +1,59 @@
 let LoginPage = require('../сlasses/LoginPage');
-let login_steps = new LoginPage();
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
-var expect = chai.expect;
+const loginPage = new LoginPage();
+let chai = require('chai');
+let chaiAsPromised = require('chai-as-promised');
+let expect = chai.expect;
 chai.use(chaiAsPromised);
 
-class Login_steps extends LoginPage {
+class LoginSteps extends LoginPage {
 
-    async LoginCheck() {
+    async loginCheck() {
         await expect(browser.getCurrentUrl()).to.become('http://ep-ubuntu.levi9.com/app_dev.php/login');
-        await expect(login_steps.GetTitle()).to.become('MyReview');
-        await login_steps.CheckPresenceOfTextInElement(login_steps.panel_info, "Log In");
+        await expect(loginPage.getTitle()).to.become('MyReview');
+        await loginPage.checkPresenceOfTextInElement(loginPage.panel_info, "Log In");
     }
 
-    async SendKeysLogin(login) {
-        await login_steps.FindElementAndSendKEys(login_steps.username, login);
+    async sendKeysLogin(login) {
+        await loginPage.findElementAndSendKEys(loginPage.username, login);
     }
 
-    async SendKeysPassword(password) {
-        await login_steps.FindElementAndSendKEys(login_steps.password, password);
+    async sendKeysPassword(password) {
+        await loginPage.findElementAndSendKEys(loginPage.password, password);
     }
 
-    async ClickLogin() {
-        await login_steps.Click(login_steps.login_button);
+    async clickLogin() {
+        await loginPage.click(loginPage.login_button);
     }
 
-    async CheckLoggedByUsername() {
-        await expect(login_steps.CheckIfUserISLogged(login_steps.username_logged)).to.eventually.oneOf(['eptester1', "epphp1", "eptesterdm", "phpdm"]);
+    async checkLoggedByUsername() {
+        await expect(loginPage.checkIfUserISLogged(loginPage.username_logged)).to.eventually.oneOf(['eptester1', "epphp1", "eptesterdm", "phpdm"]);
     }
 
-    async LogOut() {
-        await login_steps.CheckLogOut(login_steps.log_out_button);
+    async logOut() {
+        await loginPage.checkLogOut(loginPage.log_out_button);
     }
 
-    async NavBarLogoCheck() {
-        await login_steps.CheckPresenceNavbar(login_steps.login_image_logo, login_steps.navigation_header);
+    async navBarLogoCheck() {
+        await loginPage.checkPresenceNavbar(loginPage.login_image_logo, loginPage.navigation_header);
         await expect(browser.getCurrentUrl()).to.eventually.equal("http://ep-ubuntu.levi9.com/app_dev.php/login");
     }
 
-    async CheckLoginPanelText() {
-        await login_steps.CheckPresenceOfTextInElement(login_steps.panel_info, "Log In");
+    async checkLoginPanelText() {
+        await loginPage.checkPresenceOfTextInElement(loginPage.panel_info, "Log In");
     }
 
-    async CheckPlaceholdersText() {
-        await login_steps.CheckPresenceUserPasPlaceholders("Username");
-        await login_steps.CheckPresenceUserPasPlaceholders("Password");
+    async checkPlaceholdersText() {
+        await loginPage.checkPresenceUserPasPlaceholders("Username");
+        await loginPage.checkPresenceUserPasPlaceholders("Password");
     }
 
-    async CheckIcons() {
-        await login_steps.CheckFieldsIcons(login_steps.username_icon, login_steps.password_icon);
+    async checkIcons() {
+        await loginPage.checkFieldsIcons(loginPage.username_icon, loginPage.password_icon);
     }
 
-    async CheckLoginButton() {
-        await login_steps.CheckValueElement(login_steps.login_button, "Login");
+    async checkLoginButton() {
+        await loginPage.checkValueElement(loginPage.login_button, "Login");
     }
 }
 
-module.exports = Login_steps;
+module.exports = LoginSteps;

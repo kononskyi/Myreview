@@ -34,81 +34,66 @@ class NotesPage extends Helpers {
         this.delete_last_notes_button = by.css(".paneContent[aria-hidden='false']>goal:last-of-type>div:last-of-type>div[class='col-xs-4 goalActions']>button[ng-click='vm.deleteGoal()']");
     }
 
-    async CheckObjectiveWindow() {
-        await this.WaitUntilElementIsVisible(this.dialog_window_objective);
-        await this.CheckPresenceOfTextInElement(this.dialog_window_objective_name, 'Objective');
-        await this.WaitUntilElementIsVisible(this.dialog_window_objective_cancel_top);
-        await this.WaitUntilElementIsVisible(this.dialog_window_objective_title_field);
-        await this.Click(this.dialog_window_objective_comment_field);
-        await this.CheckPresenceOfTextInElement(this.dialog_window_objective_title_field_placeholder, 'Tittle');
-        await this.WaitUntilElementIsVisible(this.dialog_window_objective_comment_field);
-        await this.Click(this.dialog_window_objective_title_field);
-        await this.CheckPresenceOfTextInElement(this.dialog_window_objective_comment_field_placeholder, 'Comment by employee');
-        await this.WaitUntilElementIsVisible(this.dialog_window_objective_datapicker);
-        await this.WaitUntilElementIsVisible(this.dialog_window_objective_date_edit);
-        await this.WaitUntilElementIsVisible(this.dialog_window_objective_cansel_down);
-        await this.CheckPresenceOfTextInElement(this.dialog_window_objective_cansel_down_text, 'Cancel');
-        await this.WaitUntilElementIsVisible(this.dialog_window_objective_save);
-        return this.WaitUntilElementIsVisible(this.dialog_window_objective_save_text, 'Save');
+    async checkObjectiveWindow() {
+        await this.waitUntilElementIsVisible(this.dialog_window_objective);
+        await this.checkPresenceOfTextInElement(this.dialog_window_objective_name, 'Objective');
+        await this.waitUntilElementIsVisible(this.dialog_window_objective_cancel_top);
+        await this.waitUntilElementIsVisible(this.dialog_window_objective_title_field);
+        await this.click(this.dialog_window_objective_comment_field);
+        await this.checkPresenceOfTextInElement(this.dialog_window_objective_title_field_placeholder, 'Tittle');
+        await this.waitUntilElementIsVisible(this.dialog_window_objective_comment_field);
+        await this.click(this.dialog_window_objective_title_field);
+        await this.checkPresenceOfTextInElement(this.dialog_window_objective_comment_field_placeholder, 'Comment by employee');
+        await this.waitUntilElementIsVisible(this.dialog_window_objective_datapicker);
+        await this.waitUntilElementIsVisible(this.dialog_window_objective_date_edit);
+        await this.waitUntilElementIsVisible(this.dialog_window_objective_cansel_down);
+        await this.checkPresenceOfTextInElement(this.dialog_window_objective_cansel_down_text, 'Cancel');
+        await this.waitUntilElementIsVisible(this.dialog_window_objective_save);
+        return this.waitUntilElementIsVisible(this.dialog_window_objective_save_text, 'Save');
     }
 
-    async ChooseCurrentDeadlineFromCalendar(open_cal_button, calendar, current_deadline) {
-        await this.Click(open_cal_button);
-        await this.WaitUntilElementIsVisible(calendar);
-        return this.Click(current_deadline);
-
+    async chooseCurrentDeadlineFromCalendar(open_cal_button, calendar, current_deadline) {
+        await this.click(open_cal_button);
+        await this.waitUntilElementIsVisible(calendar);
+        return this.click(current_deadline);
     }
 
-    async CheckJustAddedObjectiveTittle(title_text) {
+    async checkJustAddedObjectiveTittle(title_text) {
         let title_scope = element.all(this.objective_titles_scope).filter(async (elem) => {
             return await elem.getText() === title_text
         });
         let count = title_scope.count();
-        if (count !== 1) {
-            throw Error("Check just added objective title, please");
-        } else {
-            return title_scope;
-        }
+        await expect(count).to.become(1);
+        return title_scope;
     }
 
-    CheckJustAddedObjectiveComment(comment_text) {
-        let comment_scope = $$('.clearfix div[class=\'col-xs-4 goalComments\'] div:first-of-type').filter((elem) => {
-            return elem.getText().then((result) => {
-                return result === 'Employee: ' + comment_text;
-            })
+    async checkJustAddedObjectiveComment(comment_text) {
+        let comment_scope = $$('.clearfix div[class=\'col-xs-4 goalComments\'] div:first-of-type').filter(async (elem) => {
+            return await elem.getText() === 'Employee: ' + comment_text;
         });
-
-        comment_scope.count().then((value) => {
-            console.log(value);
-            if (value !== 1) {
-                throw Error('Check objectives list, filter find more than 1 objective with comment - ' + comment_text);
-            }
-        });
-        return comment_scope.getText().then((res) => {
-            console.log(res);
-        });
+        let count = comment_scope.count();
+        await expect(count).to.become(1);
+        return comment_scope;
     }
 
-    async CheckJustDeletedObjective(text) {
+    async checkJustDeletedObjective(text) {
         let scope = element.all(this.objective_titles_scope).filter(async (elem) => {
             return await elem.getText() === text
         });
         let count = scope.count();
-        if (count !== 0) {
-            throw Error("Element isn't deleted!!!");
-        } else
-            return scope;
+        await expect(count).to.become(1);
+        return scope;
     }
 
-    async CheckDeleteObjectivesWindow() {
-        await this.WaitUntilElementIsVisible(this.notes_delete_dialog_window);
-        await this.WaitUntilElementIsVisible(this.notes_delete_dialog_bodytext1);
-        await this.WaitUntilElementIsVisible(this.notes_delete_dialog_bodytext2);
-        await this.WaitUntilElementIsVisible(this.notes_delete_dialog_cancel_button);
-        await this.CheckPresenceOfTextInElement(this.notes_delete_dialog_cancel_button_text, "Cancel");
-        await this.WaitUntilElementIsVisible(this.notes_delete_dialog_delete_button);
-        await this.CheckPresenceOfTextInElement(this.notes_delete_dialog_delete_button_text, "Delete");
-        return this.Click(this.notes_delete_dialog_delete_button);
+    async checkDeleteObjectivesWindow() {
+        await this.waitUntilElementIsVisible(this.notes_delete_dialog_window);
+        await this.waitUntilElementIsVisible(this.notes_delete_dialog_bodytext1);
+        await this.waitUntilElementIsVisible(this.notes_delete_dialog_bodytext2);
+        await this.waitUntilElementIsVisible(this.notes_delete_dialog_cancel_button);
+        await this.checkPresenceOfTextInElement(this.notes_delete_dialog_cancel_button_text, "Cancel");
+        await this.waitUntilElementIsVisible(this.notes_delete_dialog_delete_button);
+        await this.checkPresenceOfTextInElement(this.notes_delete_dialog_delete_button_text, "Delete");
+        return this.click(this.notes_delete_dialog_delete_button);
     }
 }
 

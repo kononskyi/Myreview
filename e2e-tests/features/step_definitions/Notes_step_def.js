@@ -1,64 +1,56 @@
 "use strict";
 
-let StepsPage = require('../steps/Login_steps');
-let steps = new StepsPage;
-let NotesPage = require('../steps/Notes_steps');
-let notes = new NotesPage;
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
-var expect = chai.expect;
-chai.use(chaiAsPromised);
+let NotesPageSteps = require('../steps/Notes_steps');
+let notesPageSteps = new NotesPageSteps;
 
 const {Given, When, Then, BeforeAll, AfterAll} = require('cucumber');
 browser.ignoreSynchronization = true;
 
 BeforeAll('', async () => {
-    await steps.GetUrl("http://ep-ubuntu.levi9.com/app_dev.php/login");
+    await notesPageSteps.getUrl("http://ep-ubuntu.levi9.com/app_dev.php/login");
 });
 
 AfterAll('Br close', async () => {
-    await steps.CloseTab();
+    await notesPageSteps.closeTab();
 });
 
 Given(/^Logged as employee "([^"]*)" with "([^"]*)"$/, async (login, password) => {
-    await notes.LoginAsUSer(login, password);
+    await notesPageSteps.loginAsUSer(login, password);
 });
 
 When(/^Notes item is opened$/, async () => {
-    await notes.CheckNotesItem();
+    await notesPageSteps.checkNotesItem();
 });
 
 When(/^User press Add objective button$/, async () => {
-    await notes.Click(notes.add_objective_button);
-
+    await notesPageSteps.click(this.add_objective_button);
 });
 
 Then(/^Objectives modal window is appeared$/, async () => {
-    await notes.CheckObjectiveWindow();
+    await this.checkObjectiveWindow();
 });
 
 When(/^Fill title, comment with valid data and choose deadline$/, async () => {
-    await notes.CreateObjective();
+    await notesPageSteps.createObjective();
 });
 
 When(/^Press Save button$/, async () => {
-    await this.Click(this.dialog_window_objective_save);
-
+    await this.click(this.dialog_window_objective_save);
 });
 
 Then(/^Just saved objective appears in the list of objectives$/, async () => {
-    await this.CheckJustAddedObjectiveTittle("TitleTitleTitle");
+    await this.checkJustAddedObjectiveTittle("TitleTitleTitle");
 });
 
 
 When(/^User press delete button near the last objective$/, async () => {
-    await this.Click(this.delete_last_notes_button);
+    await this.click(this.delete_last_notes_button);
 });
 
 When(/^Confirm the selection in Delete this Objective dialog window by clicking Delete button$/, async () => {
-    await this.CheckDeleteObjectivesWindow();
+    await this.checkDeleteObjectivesWindow();
 });
 
 Then(/^Objective removed from the list$/, async () => {
-    await this.CheckJustDeletedObjective("123123123123");
+    await this.checkJustDeletedObjective("123123123123");
 });
